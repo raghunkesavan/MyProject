@@ -24,7 +24,7 @@ public with sharing class CaseTaskServiceClass {
                 case.Subject = 'New Case for' + cont.Name;
                 case.Type = 'Newcontact';
                 case.Status = 'Working';
-                case.Origin = 'New Contact'
+                case.Origin = 'New Contact';
                 case.ownerId = cont.ownerId;
                 case.AccountId = cont?.AccountId;
                 case.Priority = mapContactPriority.get(cont.Priority); //Low,Medium,High
