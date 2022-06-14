@@ -3,8 +3,8 @@ public class ContactInvokable {
     public static void ProcessContactsForCases(List<Id> contactIds)
     {
          List<Contact> lstContacts =  
-         [SELECT Id,Subject,Type,Status,Origin,OwnerId,
-         AccountId,Priority FROM Case WHERE Id in :contactIds];
+         [SELECT Id,Name,ownerId,Priority__c,
+         AccountId FROM Contact WHERE Id in :contactIds];
          CaseTaskServiceClass.caseCreation(lstContacts);
 
     }

@@ -8,7 +8,7 @@ public with sharing class CaseTaskServiceClass {
     private static string HIGH = 'High';
     private static string MEDIUM = 'Medium';
     private static string LOW = 'Low';
-
+    
 
     public static void caseCreation(List<Contact> contacts){
         Map<String,String> mapContactPriority = 
@@ -20,15 +20,15 @@ public with sharing class CaseTaskServiceClass {
         List<Case> casesList = new List<Case>();
       
         for (Contact cont : contacts) {
-                Case case = new Case();
-                case.Subject = 'New Case for' + cont.Name;
-                case.Type = 'Newcontact';
-                case.Status = 'Working';
-                case.Origin = 'New Contact';
-                case.ownerId = cont.ownerId;
-                case.AccountId = cont?.AccountId;
-                case.Priority = mapContactPriority.get(cont.Priority); //Low,Medium,High
-                casesList.add(case);
+            Case caseNew = new Case();
+                caseNew.Subject = 'New Case for' + cont.Name;
+                caseNew.Type = 'Newcontact';
+                caseNew.Status = 'Working';
+                caseNew.Origin = 'New Contact';
+                caseNew.ownerId = cont.ownerId;
+                caseNew.AccountId = cont?.AccountId;
+                caseNew.Priority = mapContactPriority.get(cont.Priority__c); //Low,Medium,High
+                casesList.add(caseNew);
          
         }
         
@@ -37,6 +37,7 @@ public with sharing class CaseTaskServiceClass {
         taskCreation(casesList);
         }
         catch(DmlException e) {
+         System.debug('The following exception has occurred: ' + e.getMessage());
 
             //errorobject
         }
@@ -53,15 +54,15 @@ public with sharing class CaseTaskServiceClass {
 
         List<Task> tasksList = new List<Task>();
 
-        for (Case case : cases) {
+        for (Case caseNew : cases) {
 
                 Task tsk = new Task();
-				tsk.Subject = 'Welcome call for' + case.CaseNumber ;
-				tsk.Status = 'Not Started';
-				tsk.Priority = 'Normal';
-                tsk.ActivityDate = mapTaskpriority.get(case.Priority);
-				tsk.OwnerId = case.OwnerId;
-				tasksList.add(tsk);
+                tsk.Subject = 'Welcome call for' + caseNew.CaseNumber ;
+                tsk.Status = 'Not Started';
+                tsk.Priority = 'Normal';
+                tsk.ActivityDate = mapTaskpriority.get(caseNew.Priority);
+                tsk.OwnerId = caseNew.OwnerId;
+                tasksList.add(tsk);
            
         }
         try {
@@ -70,10 +71,9 @@ public with sharing class CaseTaskServiceClass {
         }
         catch(DmlException e) {
 
-            //errorobject needs to be created
-            // invocable class
-            //test class
-            //process builder
+        System.debug('The following exception has occurred: ' + e.getMessage());
+            //Or errorobject needs to be created insert those details
+        
         }
 
     }
